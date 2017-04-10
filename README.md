@@ -1,5 +1,3 @@
-# TasmanianDevils-IaC-Network
-
 ## Sample Network Reference Architecture
 This repository contains the code that can be used to provision a VNET in Azure
 * via Infrastructure-as-Code
@@ -16,3 +14,6 @@ The common pattern will go as following ;
 The template files also have an accompanying .tests file that can be picked up by pester for unit/integration testing. The tests will include some basic unit testing and will do several test deployments as a kind of smoke test /syntax validation.
 
 ![Example Build Pester](/Screenshots/Example-Build-pester.png)
+
+## Tasmanian Traders
+Tasmanian Traders is a [fictional Microsoft company](https://en.wikipedia.org/wiki/List_of_fictional_Microsoft_companies) which I found to be a very cool name. It makes me think back towards the Tasmanian Devil in Looney Tunes. Here I've "borrowed" the name as a kind of theme for all demos related to Azure.
