@@ -15,5 +15,7 @@ The template files also have an accompanying .tests file that can be picked up b
 
 ![Example Build Pester](/Screenshots/Example-Build-pester.png)
 
+You can find exports of the Build & Release definitions under the [VSTS](/VSTS) folder in this repository. The release definition can be imported with out-of-the-box VSTS functionality. For the build definition, you'll need to use the following extension ; [Export/Import Build Definition](https://marketplace.visualstudio.com/items?itemName=onlyutkarsh.ExportImportBuildDefinition)
+
 ## Tasmanian Traders
 Tasmanian Traders is a [fictional Microsoft company](https://en.wikipedia.org/wiki/List_of_fictional_Microsoft_companies) which I found to be a very cool name. It makes me think back towards the Tasmanian Devil in Looney Tunes. Here I've "borrowed" the name as a kind of theme for all demos related to Azure.
