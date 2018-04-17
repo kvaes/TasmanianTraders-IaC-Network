@@ -1,0 +1,260 @@
+{
+    "options": [
+        {
+            "enabled": false,
+            "definition": {
+                "id": "a9db38f9-9fdc-478c-b0f9-464221e58316"
+            },
+            "inputs": {
+                "workItemType": "1449210",
+                "assignToRequestor": "true",
+                "additionalFields": "{}"
+            }
+        }
+    ],
+    "triggers": [
+        {
+            "branchFilters": [
+                "+master"
+            ],
+            "pathFilters": [],
+            "batchChanges": true,
+            "maxConcurrentBuildsPerBranch": 1,
+            "triggerType": 2
+        }
+    ],
+    "variables": {
+        "system.debug": {
+            "value": "false",
+            "allowOverride": true
+        }
+    },
+    "retentionRules": [
+        {
+            "branches": [
+                "+refs/heads/*"
+            ],
+            "artifacts": [],
+            "artifactTypesToDelete": [
+                "FilePath",
+                "SymbolStore"
+            ],
+            "daysToKeep": 10,
+            "minimumToKeep": 1,
+            "deleteBuildRecord": true,
+            "deleteTestResults": true
+        }
+    ],
+    "properties": {},
+    "tags": [],
+    "metrics": [
+        {
+            "name": "CurrentBuildsInQueue",
+            "scope": "master",
+            "intValue": 0
+        },
+        {
+            "name": "CurrentBuildsInProgress",
+            "scope": "master",
+            "intValue": 0
+        },
+        {
+            "name": "CurrentBuildsInQueue",
+            "scope": "refs/heads/master",
+            "intValue": 0
+        },
+        {
+            "name": "CurrentBuildsInProgress",
+            "scope": "refs/heads/master",
+            "intValue": 0
+        }
+    ],
+    "_links": {
+        "self": {
+            "href": ""
+        },
+        "web": {
+            "href": ""
+        },
+        "editor": {
+            "href": ""
+        }
+    },
+    "comment": "Managing the network of TasmanianTraders via Infrastructure-as-Code",
+    "jobAuthorizationScope": 1,
+    "jobTimeoutInMinutes": 60,
+    "jobCancelTimeoutInMinutes": 5,
+    "process": {
+        "phases": [
+            {
+                "steps": [
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Run Pester Tests",
+                        "timeoutInMinutes": 0,
+                        "refName": "AzurePowerShell_1",
+                        "task": {
+                            "id": "72a1931b-effb-4d2e-8fd8-f8472a07cb62",
+                            "versionSpec": "1.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "ConnectedServiceNameSelector": "ConnectedServiceNameARM",
+                            "ConnectedServiceName": "",
+                            "ConnectedServiceNameARM": "291789dc-9eb4-4463-9858-a97adaf42fc6",
+                            "ScriptType": "FilePath",
+                            "ScriptPath": "invokePester.ps1",
+                            "Inline": "# You can write your azure powershell scripts inline here. \n# You can also pass predefined and custom variables to this script using arguments",
+                            "ScriptArguments": ""
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Publish Test Results ",
+                        "timeoutInMinutes": 0,
+                        "refName": "PublishTestResults_2",
+                        "task": {
+                            "id": "0b0f01ed-7dde-43ff-9cbb-e48954daf9b1",
+                            "versionSpec": "1.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "testRunner": "NUnit",
+                            "testResultsFiles": "**/TEST-*.xml",
+                            "mergeTestResults": "false",
+                            "testRunTitle": "",
+                            "platform": "",
+                            "configuration": "",
+                            "publishRunAttachments": "true"
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Archive Files ",
+                        "timeoutInMinutes": 0,
+                        "refName": "ArchiveFiles_3",
+                        "task": {
+                            "id": "d8b84976-e99a-4b86-b885-4849694435b0",
+                            "versionSpec": "1.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "rootFolder": "$(Build.Repository.LocalPath)",
+                            "includeRootFolder": "true",
+                            "archiveType": "default",
+                            "tarCompression": "gz",
+                            "archiveFile": "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip",
+                            "replaceExistingArchive": "true"
+                        }
+                    },
+                    {
+                        "environment": {},
+                        "enabled": true,
+                        "continueOnError": false,
+                        "alwaysRun": false,
+                        "displayName": "Copy Publish Artifact: drop",
+                        "timeoutInMinutes": 0,
+                        "refName": "CopyPublishBuildArtifacts_4",
+                        "task": {
+                            "id": "1d341bb0-2106-458c-8422-d00bcea6512a",
+                            "versionSpec": "1.*",
+                            "definitionType": "task"
+                        },
+                        "inputs": {
+                            "CopyRoot": "$(Build.ArtifactStagingDirectory)",
+                            "Contents": "**\\*.zip",
+                            "ArtifactName": "drop",
+                            "ArtifactType": "Container",
+                            "TargetPath": "\\\\my\\share\\$(Build.DefinitionName)\\$(Build.BuildNumber)"
+                        }
+                    }
+                ],
+                "name": null,
+                "refName": "Phase_1",
+                "target": {
+                    "executionOptions": null,
+                    "allowScriptsAuthAccessOption": false,
+                    "type": 1
+                },
+                "jobAuthorizationScope": 0
+            }
+        ],
+        "type": 1
+    },
+    "repository": {
+        "properties": {
+            "connectedServiceId": "56d57dc9-fcdf-4893-adb1-a2d027d0c3f1",
+            "apiUrl": "https://api.github.com/repos/kvaes/TasmanianTraders-IaC-Network",
+            "branchesUrl": "https://api.github.com/repos/kvaes/TasmanianTraders-IaC-Network/branches",
+            "cloneUrl": "https://github.com/kvaes/TasmanianTraders-IaC-Network.git",
+            "refsUrl": "https://api.github.com/repos/kvaes/TasmanianTraders-IaC-Network/git/refs",
+            "gitLfsSupport": "false",
+            "skipSyncSource": "false",
+            "fetchDepth": "0",
+            "cleanOptions": "3"
+        },
+        "id": "https://github.com/kvaes/TasmanianTraders-IaC-Network.git",
+        "type": "GitHub",
+        "name": "kvaes/TasmanianTraders-IaC-Network",
+        "url": "https://github.com/kvaes/TasmanianTraders-IaC-Network.git",
+        "defaultBranch": "master",
+        "clean": "true",
+        "checkoutSubmodules": false
+    },
+    "quality": 1,
+    "authoredBy": {
+        "displayName": "Microsoft.VisualStudio.Services.TFS",
+        "url": "",
+        "_links": {
+            "avatar": {
+                "href": ""
+            }
+        },
+        "id": "00000002-0000-8888-8000-000000000000",
+        "uniqueName": "00000002-0000-8888-8000-000000000000@2c895908-04e0-4952-89fd-54b0046d6288",
+        "imageUrl": "",
+        "descriptor": ""
+    },
+    "drafts": [],
+    "queue": {
+        "_links": {
+            "self": {
+                "href": ""
+            }
+        },
+        "id": 18,
+        "name": "Hosted",
+        "url": "",
+        "pool": {
+            "id": 2,
+            "name": "Hosted",
+            "isHosted": true
+        }
+    },
+    "id": 9,
+    "name": "TasmanianTraders - IaC - Network",
+    "url": "",
+    "uri": "vstfs:///Build/Definition/9",
+    "path": "\\",
+    "type": 2,
+    "queueStatus": 0,
+    "revision": 6,
+    "createdDate": "2017-06-28T20:09:49.153Z",
+    "project": {
+        "id": "878307e5-c3c3-4593-81a7-18e30544ab4f",
+        "name": "Tasmanian Traders",
+        "url": "",
+        "state": "wellFormed",
+        "revision": 49,
+        "visibility": 0
+    }
+}
