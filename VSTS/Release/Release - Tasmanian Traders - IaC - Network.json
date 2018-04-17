@@ -1,0 +1,786 @@
+{
+    "source": 2,
+    "id": 1,
+    "revision": 18,
+    "name": "Tasmanian Traders - IaC - Network",
+    "description": null,
+    "createdBy": {
+        "displayName": "Karim Vaes",
+        "url": "",
+        "_links": {
+            "avatar": {
+                "href": ""
+            }
+        },
+        "id": "9b6baee6-8ec7-4e69-af16-338a61547461",
+        "uniqueName": "",
+        "imageUrl": "",
+        "descriptor": ""
+    },
+    "createdOn": "2017-03-21T12:35:17.090Z",
+    "modifiedBy": {
+        "displayName": "Karim Vaes",
+        "url": "",
+        "_links": {
+            "avatar": {
+                "href": ""
+            }
+        },
+        "id": "9b6baee6-8ec7-4e69-af16-338a61547461",
+        "uniqueName": "",
+        "imageUrl": "",
+        "descriptor": ""
+    },
+    "modifiedOn": "2018-01-19T13:24:36.430Z",
+    "isDeleted": false,
+    "path": "\\",
+    "variables": {},
+    "variableGroups": [],
+    "environments": [
+        {
+            "id": 1,
+            "name": "Development",
+            "rank": 1,
+            "owner": {
+                "displayName": "Karim Vaes",
+                "url": "",
+                "_links": {
+                    "avatar": {
+                        "href": ""
+                    }
+                },
+                "id": "9b6baee6-8ec7-4e69-af16-338a61547461",
+                "uniqueName": "",
+                "imageUrl": "",
+                "descriptor": ""
+            },
+            "variables": {
+                "networkparameterfile": {
+                    "value": "Demo-Common-Network.dev.parameters.json"
+                },
+                "networkresourcegroup": {
+                    "value": "tt-network-dev"
+                }
+            },
+            "variableGroups": [],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 1
+                    }
+                ]
+            },
+            "deployStep": {
+                "id": 2
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 3
+                    }
+                ]
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 18,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": 1,
+                    "name": "Run on agent",
+                    "workflowTasks": [
+                        {
+                            "taskId": "5e1e3830-fbfb-11e5-aab1-090c92bc4988",
+                            "version": "1.*",
+                            "name": "Extract files ",
+                            "refName": "ExtractFiles_1",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "archiveFilePatterns": "$(System.DefaultWorkingDirectory)/TasmanianTraders - IaC - Network/drop/*.zip",
+                                "destinationFolder": "$(System.DefaultWorkingDirectory)/output/",
+                                "cleanDestinationFolder": "true"
+                            }
+                        },
+                        {
+                            "taskId": "94a74903-f93f-4075-884f-dc11f34058b4",
+                            "version": "2.*",
+                            "name": "Azure Deployment:Create Or Update Resource Group action on $(networkresourcegroup)",
+                            "refName": "AzureResourceGroupDeployment_2",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "450ec1ed-06f6-411f-93fe-e3fa6e71b466",
+                                "action": "Create Or Update Resource Group",
+                                "resourceGroupName": "$(networkresourcegroup)",
+                                "location": "West Europe",
+                                "templateLocation": "Linked artifact",
+                                "csmFileLink": "",
+                                "csmParametersFileLink": "",
+                                "csmFile": "$(System.DefaultWorkingDirectory)/output/s/Common/Network/Demo-Common-Network.json",
+                                "csmParametersFile": "$(System.DefaultWorkingDirectory)/output/s/Common/Network/$(networkparameterfile)",
+                                "overrideParameters": "",
+                                "deploymentMode": "Complete",
+                                "enableDeploymentPrerequisites": "None",
+                                "deploymentGroupEndpoint": "",
+                                "project": "",
+                                "deploymentGroupName": "",
+                                "copyAzureVMTags": "true",
+                                "outputVariable": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": false,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "ReleaseStarted",
+                    "conditionType": 1,
+                    "value": ""
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 0,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 86,
+                "url": "",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {},
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [],
+            "badgeUrl": ""
+        },
+        {
+            "id": 2,
+            "name": "Test",
+            "rank": 2,
+            "owner": {
+                "displayName": "Karim Vaes",
+                "url": "",
+                "_links": {
+                    "avatar": {
+                        "href": ""
+                    }
+                },
+                "id": "9b6baee6-8ec7-4e69-af16-338a61547461",
+                "uniqueName": "",
+                "imageUrl": "",
+                "descriptor": ""
+            },
+            "variables": {
+                "networkparameterfile": {
+                    "value": "Demo-Common-Network.tst.parameters.json"
+                },
+                "networkresourcegroup": {
+                    "value": "tt-network-tst"
+                }
+            },
+            "variableGroups": [],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 4
+                    }
+                ]
+            },
+            "deployStep": {
+                "id": 9
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 10
+                    }
+                ]
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 18,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": 1,
+                    "name": "Run on agent",
+                    "workflowTasks": [
+                        {
+                            "taskId": "5e1e3830-fbfb-11e5-aab1-090c92bc4988",
+                            "version": "1.*",
+                            "name": "Extract files ",
+                            "refName": "ExtractFiles_1",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "archiveFilePatterns": "$(System.DefaultWorkingDirectory)/TasmanianTraders - IaC - Network/drop/*.zip",
+                                "destinationFolder": "$(System.DefaultWorkingDirectory)/output/",
+                                "cleanDestinationFolder": "true"
+                            }
+                        },
+                        {
+                            "taskId": "94a74903-f93f-4075-884f-dc11f34058b4",
+                            "version": "2.*",
+                            "name": "Azure Deployment:Create Or Update Resource Group action on $(networkresourcegroup)",
+                            "refName": "AzureResourceGroupDeployment_2",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "450ec1ed-06f6-411f-93fe-e3fa6e71b466",
+                                "action": "Create Or Update Resource Group",
+                                "resourceGroupName": "$(networkresourcegroup)",
+                                "location": "West Europe",
+                                "templateLocation": "Linked artifact",
+                                "csmFileLink": "",
+                                "csmParametersFileLink": "",
+                                "csmFile": "$(System.DefaultWorkingDirectory)/output/s/Common/Network/Demo-Common-Network.json",
+                                "csmParametersFile": "$(System.DefaultWorkingDirectory)/output/s/Common/Network/$(networkparameterfile)",
+                                "overrideParameters": "",
+                                "deploymentMode": "Complete",
+                                "enableDeploymentPrerequisites": "None",
+                                "deploymentGroupEndpoint": "",
+                                "project": "",
+                                "deploymentGroupName": "",
+                                "copyAzureVMTags": "true",
+                                "outputVariable": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": false,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "Development",
+                    "conditionType": 2,
+                    "value": "4"
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 0,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 86,
+                "url": "",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {},
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [],
+            "badgeUrl": ""
+        },
+        {
+            "id": 3,
+            "name": "Acceptance",
+            "rank": 3,
+            "owner": {
+                "displayName": "Karim Vaes",
+                "url": "",
+                "_links": {
+                    "avatar": {
+                        "href": ""
+                    }
+                },
+                "id": "9b6baee6-8ec7-4e69-af16-338a61547461",
+                "uniqueName": "",
+                "imageUrl": "",
+                "descriptor": ""
+            },
+            "variables": {
+                "networkparameterfile": {
+                    "value": "Demo-Common-Network.acc.parameters.json"
+                },
+                "networkresourcegroup": {
+                    "value": "tt-network-acc"
+                }
+            },
+            "variableGroups": [],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 5
+                    }
+                ]
+            },
+            "deployStep": {
+                "id": 8
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 11
+                    }
+                ]
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 18,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": 1,
+                    "name": "Run on agent",
+                    "workflowTasks": [
+                        {
+                            "taskId": "5e1e3830-fbfb-11e5-aab1-090c92bc4988",
+                            "version": "1.*",
+                            "name": "Extract files ",
+                            "refName": "ExtractFiles_1",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "archiveFilePatterns": "$(System.DefaultWorkingDirectory)/TasmanianTraders - IaC - Network/drop/*.zip",
+                                "destinationFolder": "$(System.DefaultWorkingDirectory)/output/",
+                                "cleanDestinationFolder": "true"
+                            }
+                        },
+                        {
+                            "taskId": "94a74903-f93f-4075-884f-dc11f34058b4",
+                            "version": "2.*",
+                            "name": "Azure Deployment:Create Or Update Resource Group action on $(networkresourcegroup)",
+                            "refName": "AzureResourceGroupDeployment_2",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "450ec1ed-06f6-411f-93fe-e3fa6e71b466",
+                                "action": "Create Or Update Resource Group",
+                                "resourceGroupName": "$(networkresourcegroup)",
+                                "location": "West Europe",
+                                "templateLocation": "Linked artifact",
+                                "csmFileLink": "",
+                                "csmParametersFileLink": "",
+                                "csmFile": "$(System.DefaultWorkingDirectory)/output/s/Common/Network/Demo-Common-Network.json",
+                                "csmParametersFile": "$(System.DefaultWorkingDirectory)/output/s/Common/Network/$(networkparameterfile)",
+                                "overrideParameters": "",
+                                "deploymentMode": "Complete",
+                                "enableDeploymentPrerequisites": "None",
+                                "deploymentGroupEndpoint": "",
+                                "project": "",
+                                "deploymentGroupName": "",
+                                "copyAzureVMTags": "true",
+                                "outputVariable": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": false,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "Test",
+                    "conditionType": 2,
+                    "value": "4"
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 0,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 86,
+                "url": "",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {},
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [],
+            "badgeUrl": ""
+        },
+        {
+            "id": 4,
+            "name": "Production",
+            "rank": 4,
+            "owner": {
+                "displayName": "Karim Vaes",
+                "url": "",
+                "_links": {
+                    "avatar": {
+                        "href": ""
+                    }
+                },
+                "id": "9b6baee6-8ec7-4e69-af16-338a61547461",
+                "uniqueName": "",
+                "imageUrl": "",
+                "descriptor": ""
+            },
+            "variables": {
+                "networkparameterfile": {
+                    "value": "Demo-Common-Network.prd.parameters.json"
+                },
+                "networkresourcegroup": {
+                    "value": "tt-network-prd"
+                }
+            },
+            "variableGroups": [],
+            "preDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 6
+                    }
+                ]
+            },
+            "deployStep": {
+                "id": 7
+            },
+            "postDeployApprovals": {
+                "approvals": [
+                    {
+                        "rank": 1,
+                        "isAutomated": true,
+                        "isNotificationOn": false,
+                        "id": 12
+                    }
+                ]
+            },
+            "deployPhases": [
+                {
+                    "deploymentInput": {
+                        "parallelExecution": {
+                            "parallelExecutionType": "none"
+                        },
+                        "skipArtifactsDownload": false,
+                        "artifactsDownloadInput": {
+                            "downloadInputs": []
+                        },
+                        "queueId": 18,
+                        "demands": [],
+                        "enableAccessToken": false,
+                        "timeoutInMinutes": 0,
+                        "jobCancelTimeoutInMinutes": 1,
+                        "condition": "succeeded()",
+                        "overrideInputs": {}
+                    },
+                    "rank": 1,
+                    "phaseType": 1,
+                    "name": "Run on agent",
+                    "workflowTasks": [
+                        {
+                            "taskId": "5e1e3830-fbfb-11e5-aab1-090c92bc4988",
+                            "version": "1.*",
+                            "name": "Extract files ",
+                            "refName": "ExtractFiles_1",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "archiveFilePatterns": "$(System.DefaultWorkingDirectory)/TasmanianTraders - IaC - Network/drop/*.zip",
+                                "destinationFolder": "$(System.DefaultWorkingDirectory)/output/",
+                                "cleanDestinationFolder": "true"
+                            }
+                        },
+                        {
+                            "taskId": "94a74903-f93f-4075-884f-dc11f34058b4",
+                            "version": "2.*",
+                            "name": "Azure Deployment:Create Or Update Resource Group action on $(networkresourcegroup)",
+                            "refName": "AzureResourceGroupDeployment_2",
+                            "enabled": true,
+                            "alwaysRun": false,
+                            "continueOnError": false,
+                            "timeoutInMinutes": 0,
+                            "definitionType": "task",
+                            "overrideInputs": {},
+                            "condition": "succeeded()",
+                            "inputs": {
+                                "ConnectedServiceName": "450ec1ed-06f6-411f-93fe-e3fa6e71b466",
+                                "action": "Create Or Update Resource Group",
+                                "resourceGroupName": "$(networkresourcegroup)",
+                                "location": "West Europe",
+                                "templateLocation": "Linked artifact",
+                                "csmFileLink": "",
+                                "csmParametersFileLink": "",
+                                "csmFile": "$(System.DefaultWorkingDirectory)/output/s/Common/Network/Demo-Common-Network.json",
+                                "csmParametersFile": "$(System.DefaultWorkingDirectory)/output/s/Common/Network/$(networkparameterfile)",
+                                "overrideParameters": "",
+                                "deploymentMode": "Complete",
+                                "enableDeploymentPrerequisites": "None",
+                                "deploymentGroupEndpoint": "",
+                                "project": "",
+                                "deploymentGroupName": "",
+                                "copyAzureVMTags": "true",
+                                "outputVariable": ""
+                            }
+                        }
+                    ]
+                }
+            ],
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": false,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false
+            },
+            "demands": [],
+            "conditions": [
+                {
+                    "name": "Acceptance",
+                    "conditionType": 2,
+                    "value": "4"
+                }
+            ],
+            "executionPolicy": {
+                "concurrencyCount": 0,
+                "queueDepthCount": 0
+            },
+            "schedules": [],
+            "currentRelease": {
+                "id": 86,
+                "url": "",
+                "_links": {}
+            },
+            "retentionPolicy": {
+                "daysToKeep": 30,
+                "releasesToKeep": 3,
+                "retainBuild": true
+            },
+            "processParameters": {},
+            "properties": {},
+            "preDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGates": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "environmentTriggers": [],
+            "badgeUrl": ""
+        }
+    ],
+    "artifacts": [
+        {
+            "sourceId": "878307e5-c3c3-4593-81a7-18e30544ab4f:9",
+            "type": "Build",
+            "alias": "TasmanianTraders - IaC - Network",
+            "definitionReference": {
+                "artifactSourceDefinitionUrl": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionBranch": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionSpecific": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionTags": {
+                    "id": "",
+                    "name": ""
+                },
+                "defaultVersionType": {
+                    "id": "latestType",
+                    "name": "Latest"
+                },
+                "definition": {
+                    "id": "9",
+                    "name": "TasmanianTraders - IaC - Network"
+                },
+                "project": {
+                    "id": "878307e5-c3c3-4593-81a7-18e30544ab4f",
+                    "name": "Infrastructure-as-Code"
+                }
+            },
+            "isPrimary": true
+        }
+    ],
+    "triggers": [
+        {
+            "artifactAlias": "TasmanianTraders - IaC - Network",
+            "triggerConditions": [],
+            "triggerType": 1
+        }
+    ],
+    "releaseNameFormat": "Release-$(rev:r)",
+    "url": "",
+    "_links": {
+        "self": {
+            "href": ""
+        },
+        "web": {
+            "href": ""
+        }
+    },
+    "tags": [],
+    "properties": {}
+}
